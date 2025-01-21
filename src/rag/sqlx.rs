@@ -35,8 +35,7 @@ pub async fn setup_database() -> Result<Pool<Postgres>, sqlx::Error> {
             id bigserial primary key,
             body text,
             direction text,
-            receiver text,
-            sender text,
+            contact text,
             group_name text,
             attachments text,
             tokens integer,
@@ -61,14 +60,13 @@ pub async fn insert_embeddings_into_db(
     for msg in msg_to_encode {
         match sqlx::query(
             r#"
-            INSERT INTO embeddings (body,direction,receiver,sender,group_name,attachments,tokens,embedding)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            INSERT INTO embeddings (body,direction,contact,group_name,attachments,tokens,embedding)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             "#,
         )
         .bind(&msg.body)
         .bind(&msg.direction)
-        .bind(&msg.receiver)
-        .bind(&msg.sender)
+        .bind(&msg.contact)
         .bind(&msg.group_name)
         .bind(&msg.attachments)
         .bind(&msg.tokens)

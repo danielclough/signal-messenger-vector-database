@@ -32,7 +32,7 @@ impl Direction {
 #[derive(Debug)]
 pub struct MessageEverything {
     pub direction: Option<Direction>,
-    pub receiver: Option<String>,
+    pub contact: Option<String>,
     pub sender: Option<String>,
     pub group: Option<String>,
     pub body: Option<String>,
@@ -42,7 +42,7 @@ impl MessageEverything {
     pub fn default() -> MessageEverything {
         MessageEverything {
             direction: None,
-            receiver: None,
+            contact: None,
             sender: None,
             group: None,
             body: None,
@@ -51,7 +51,7 @@ impl MessageEverything {
     pub fn error(error: String) -> MessageEverything {
         MessageEverything {
             direction: None,
-            receiver: None,
+            contact: None,
             sender: None,
             group: None,
             body: Some(error),
@@ -140,7 +140,7 @@ pub async fn format_message<S: Store>(
                 let contact = format_contact(sender, manager).await;
                 MessageEverything {
                     direction: Some(Direction::From),
-                    receiver: Some(contact),
+                    contact: Some(contact),
                     sender: None,
                     group: None,
                     body: Some(body),
@@ -150,7 +150,7 @@ pub async fn format_message<S: Store>(
                 let contact = format_contact(recipient, manager).await;
                 MessageEverything {
                     direction: Some(Direction::To),
-                    receiver: Some(contact),
+                    contact: Some(contact),
                     sender: None,
                     group: None,
                     body: Some(body),
@@ -161,7 +161,7 @@ pub async fn format_message<S: Store>(
                 let group = format_group(*key, manager).await;
                 MessageEverything {
                     direction: Some(Direction::From),
-                    receiver: None,
+                    contact: None,
                     sender: Some(sender),
                     group: Some(group),
                     body: Some(body),
@@ -171,7 +171,7 @@ pub async fn format_message<S: Store>(
                 let group = format_group(*key, manager).await;
                 MessageEverything {
                     direction: Some(Direction::To),
-                    receiver: None,
+                    contact: None,
                     sender: None,
                     group: Some(group),
                     body: Some(body),

@@ -18,7 +18,7 @@ use super::format_message::{format_message, Direction, MessageEverything};
 #[derive(Debug, Clone)]
 pub struct ProcessedMessage {
     pub direction: Option<Direction>,
-    pub receiver: Option<String>,
+    pub contact: Option<String>,
     pub sender: Option<String>,
     pub group: Option<String>,
     pub body: Option<String>,
@@ -36,7 +36,7 @@ pub async fn process_incoming_message<S: Store>(
 ) -> ProcessedMessage {
     let MessageEverything {
         direction,
-        receiver,
+        contact,
         sender,
         group,
         body,
@@ -91,7 +91,7 @@ pub async fn process_incoming_message<S: Store>(
             None
         },
         direction,
-        receiver,
+        contact,
         sender: Some(sender.to_string()),
         group,
         body,

@@ -7,8 +7,7 @@ use serde_json::{json, Value};
 pub struct SignalMessageWithEmbedding {
     pub body: String,
     pub direction: String,
-    pub receiver: Option<String>,
-    pub sender: Option<String>,
+    pub contact: Option<String>,
     pub group_name: Option<String>,
     pub attachments: Option<Vec<String>>,
     pub tokens: i32,
@@ -19,8 +18,7 @@ pub struct SignalMessageWithEmbedding {
 pub struct SignalMessageWithVector {
     pub body: String,
     pub direction: String,
-    pub receiver: Option<String>,
-    pub sender: Option<String>,
+    pub contact: Option<String>,
     pub group_name: Option<String>,
     pub attachments: Option<Vec<String>>,
     pub tokens: i32,
@@ -60,8 +58,7 @@ pub async fn process_dataframe(df: &Vec<ProcessedMessage>) -> Vec<SignalMessageW
                 tokens: token_len as i32,
                 embedding: get_embeddings_from_ollama(&text).await.unwrap(),
                 direction: data.direction.clone().unwrap().to_string(),
-                receiver: data.receiver.clone(),
-                sender: data.sender.clone(),
+                contact: data.contact.clone(),
                 group_name: data.group.clone(),
                 attachments: data.attachments.clone(),
             });
@@ -98,8 +95,7 @@ pub async fn process_dataframe(df: &Vec<ProcessedMessage>) -> Vec<SignalMessageW
                             Some(x) => x.to_string(),
                             None => String::new(),
                         },
-                        receiver: data.receiver.clone(),
-                        sender: data.sender.clone(),
+                        contact: data.contact.clone(),
                         group_name: data.group.clone(),
                         attachments: data.attachments.clone(),
                         tokens: token_len as i32,
@@ -147,7 +143,7 @@ async fn get_embeddings_from_ollama(text: &str) -> Result<Vec<f32>, Box<dyn std:
             .iter()
             .map(|v| v.as_f64().unwrap() as f32)
             .collect();
-        println!("embedding: {:?}", embedding);
+        // println!("embedding: {:?}", embedding);
         Ok(embedding)
     } else {
         Err(format!("Error: {}", response.unwrap().text().await?).into())
@@ -187,10 +183,10 @@ pub async fn process_message_to_get_embedding(
 //             .collect::<Vec<String>>(),
 //     ),
 //     Series::new(
-//         "receiver".into(),
+//         "contact".into(),
 //         new_list
 //             .iter()
-//             .map(|x| x.receiver.clone())
+//             .map(|x| x.contact.clone())
 //             .collect::<Vec<Option<String>>>(),
 //     ),
 //     Series::new(

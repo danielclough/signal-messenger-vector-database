@@ -16,7 +16,7 @@ pub async fn receive<S: Store>(
     notifications: bool,
     pg_pool: &Pool<Postgres>,
 ) -> anyhow::Result<()> {
-    println!("Start Receiver");
+    println!("Start contact");
     let attachments_dir = attachments_dir().await?;
     println!("{:?}", attachments_dir);
     let messages = manager
