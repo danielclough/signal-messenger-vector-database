@@ -1,0 +1,7 @@
+/target
+/attachments
+/_tmp
+/volumes
+.env
+backtrace.log
+messages.csv

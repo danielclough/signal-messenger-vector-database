@@ -1,0 +1,35 @@
+[package]
+name = "signal-vector-db"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-only"
+
+[dependencies]
+presage = { path = "../presage/presage" }
+presage-store-sled = { path = "../presage/presage-store-sled" }
+
+anyhow = { version = "1.0", features = ["backtrace"] }
+chrono = { version = "0.4", default-features = false, features = ["serde", "clock"] }
+directories = "6.0"
+env_logger = "0.11"
+futures = "0.3"
+hex = "0.4"
+mime_guess = "2.0"
+qr2term = { version = "0.3.1" }
+tokio = { version = "1.35", features = ["macros", "rt-multi-thread", "io-std", "io-util"] }
+tracing = "0.1"
+url = "2.5"
+
+serde = { version = "1.0.214", features = ["derive"] }
+serde_json = "1.0.137"
+tiktoken-rs = "0.6.0"
+reqwest = { version = "0.12.12", features = ["json", "blocking"] }
+postgres = "0.19.9"
+sqlx = { version = "0.8.2", features = ["postgres", "runtime-tokio"] }
+dotenv = "0.15.0"
+pgvector = { version = "0.4", features = ["sqlx"] }
+
+# For a discussion as to why, see: 
+# https://github.com/whisperfish/libsignal-service-rs/tree/93c23cf27d27a17a803e34ea3dd6a82d268fa79e#working-around-the-issue-with-curve25519-dalek
+[patch.crates-io]
+curve25519-dalek = { git = 'https://github.com/signalapp/curve25519-dalek', tag = 'signal-curve25519-4.1.3' }
