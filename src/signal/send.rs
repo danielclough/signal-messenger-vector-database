@@ -52,7 +52,6 @@ pub async fn send<S: Store>(
                 _ = process_incoming_message(
                     manager,
                     Path::new(&attachments_dir),
-                    false,
                     &content,
                     pg_pool
                 )

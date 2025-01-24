@@ -21,9 +21,7 @@ impl Args {
         Args {
             db_path: None,
             passphrase: None,
-            subcommand: Cmd::Receive {
-                notifications: false,
-            },
+            subcommand: Cmd::Receive,
             // subcommand: Cmd::Send { uuid: uuid::uuid!(""), message: String::from("todo!()"), attachment_filepath: vec![] },
             // subcommand: Cmd::Whoami,
             // subcommand: Cmd::SyncContacts,
@@ -59,9 +57,7 @@ pub enum Cmd {
         /// Base64-encoded profile key of user to be able to access their profile
         profile_key: Option<ProfileKey>,
     },
-    Receive {
-        notifications: bool,
-    },
+    Receive,
     ListGroups,
     ListContacts,
     ListMessages {

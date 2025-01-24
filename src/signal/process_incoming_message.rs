@@ -30,14 +30,12 @@ pub struct ProcessedMessage {
 pub async fn process_incoming_message<S: Store>(
     manager: &mut Manager<S, Registered>,
     attachments_dir: &Path,
-    notifications: bool,
     content: &Content,
     pg_pool: &Pool<Postgres>,
 ) -> ProcessedMessage {
     let MessageEverything {
         direction,
         contact,
-        sender,
         group,
         body,
     } = format_message(manager, content).await;
@@ -111,13 +109,15 @@ pub async fn store_in_db(processed_message: ProcessedMessage, pg_pool: &Pool<Pos
         "is calling!" => (),
         "is typing..." => (),
         "got PNI signature message" => (),
+        "Empty data message" => (),
         "presage" => (),
         "failed to display desktop notification" => (),
-        s if s.contains("Something went wrong!") => (),
-        s if s.contains("got Delivery receipt") => (),
-        s if s.contains("got Read receipt") => (),
-        s if s.contains("new story:") => (),
-        s if s.contains("receipt for messages sent at") => (),
+        "Something went wrong!" => (),
+        s if s.starts_with("got Delivery receipt") => (),
+        s if s.starts_with("got Read receipt") => (),
+        s if s.starts_with("new story:") => (),
+        s if s.starts_with("receipt for messages sent at") => (),
+        s if s.starts_with("Reacted with ") => (),
         _ => {
             // println!("{:#?}", msg);
 

@@ -13,7 +13,6 @@ use crate::signal::process_incoming_message::process_incoming_message;
 
 pub async fn receive<S: Store>(
     manager: &mut Manager<S, Registered>,
-    notifications: bool,
     pg_pool: &Pool<Postgres>,
 ) -> anyhow::Result<()> {
     println!("Start contact");
@@ -35,7 +34,6 @@ pub async fn receive<S: Store>(
                 _ = process_incoming_message(
                     manager,
                     Path::new(&attachments_dir),
-                    notifications,
                     &content,
                     &pg_pool,
                 )

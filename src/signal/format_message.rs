@@ -33,7 +33,6 @@ impl Direction {
 pub struct MessageEverything {
     pub direction: Option<Direction>,
     pub contact: Option<String>,
-    pub sender: Option<String>,
     pub group: Option<String>,
     pub body: Option<String>,
 }
@@ -43,7 +42,6 @@ impl MessageEverything {
         MessageEverything {
             direction: None,
             contact: None,
-            sender: None,
             group: None,
             body: None,
         }
@@ -52,7 +50,6 @@ impl MessageEverything {
         MessageEverything {
             direction: None,
             contact: None,
-            sender: None,
             group: None,
             body: Some(error),
         }
@@ -141,7 +138,6 @@ pub async fn format_message<S: Store>(
                 MessageEverything {
                     direction: Some(Direction::From),
                     contact: Some(contact),
-                    sender: None,
                     group: None,
                     body: Some(body),
                 }
@@ -151,7 +147,6 @@ pub async fn format_message<S: Store>(
                 MessageEverything {
                     direction: Some(Direction::To),
                     contact: Some(contact),
-                    sender: None,
                     group: None,
                     body: Some(body),
                 }
@@ -161,8 +156,7 @@ pub async fn format_message<S: Store>(
                 let group = format_group(*key, manager).await;
                 MessageEverything {
                     direction: Some(Direction::From),
-                    contact: None,
-                    sender: Some(sender),
+                    contact: Some(sender),
                     group: Some(group),
                     body: Some(body),
                 }
@@ -172,7 +166,6 @@ pub async fn format_message<S: Store>(
                 MessageEverything {
                     direction: Some(Direction::To),
                     contact: None,
-                    sender: None,
                     group: Some(group),
                     body: Some(body),
                 }

@@ -159,9 +159,9 @@ async fn run<S: Store>(subcommand: Cmd, config_store: S, pg_pool: &Pool<Postgres
                 );
             }
         }
-        Cmd::Receive { notifications } => {
+        Cmd::Receive => {
             let mut manager = Manager::load_registered(config_store).await?;
-            receive(&mut manager, notifications, pg_pool).await?;
+            receive(&mut manager, pg_pool).await?;
             response = "contact Exiting".to_string();
         }
         Cmd::Send {
