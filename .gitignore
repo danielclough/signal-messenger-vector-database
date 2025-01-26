@@ -5,3 +5,6 @@
 .env
 backtrace.log
 messages.csv
+Cargo.lock
+signal-embeddings.csv
+signal-vector-db
